@@ -1,10 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Insumos de TI - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body>
-teste
+<body class="bg-light">
+
+<!-- CONTEÚDO PRINCIPAL -->
+<div class="container mt-4">
+    <h3 class="mb-4">Dashboard de Insumos</h3>
+
+    <!-- CARDS RESUMO -->
+    <div class="row g-3">
+        <div class="col-md-3">
+            <div class="card text-bg-primary shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Colaboradores</h5>
+                    <p class="card-text fs-4" id="qtdColaboradores"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-bg-success shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Equipamentos disponíveis</h5>
+                    <p class="card-text fs-4" id="equipDisp"></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-bg-warning shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Equipamentos emprestados</h5>
+                    <p class="card-text fs-4" id="equipEmprest"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABELA -->
+    <div class="mt-5">
+        <h5>Últimos empréstimos</h5>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Colaborador</th>
+                <th>Equipamento</th>
+                <th>Data Empréstimo</th>
+                <th>Devolução Prevista</th>
+            </tr>
+            </thead>
+            <tbody id="tabelaEmprestimos"></tbody>
+        </table>
+    </div>
+
+    <!-- BOTÕES DE AÇÃO RÁPIDA -->
+    <div class="mt-4 d-flex gap-3">
+        <a href="/colaboradores/novo" class="btn btn-primary">+ Novo Colaborador</a>
+        <a href="/equipamentos/novo" class="btn btn-success">+ Novo Equipamento</a>
+    </div>
+</div>
+
+
+
+<script>
+
+    //TODO: Recuperar infos do banco de dados
+</script>
+
 </body>
 </html>
