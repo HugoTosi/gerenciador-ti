@@ -10,4 +10,9 @@ public class PageController {
     public RedirectView inicio(){
         return new RedirectView("/inicio.html");
     }
+
+    @GetMapping("/colaboradores")
+    public RedirectView colaboradores(){
+        return new RedirectView("/colaboradores.html");
+    }
 }

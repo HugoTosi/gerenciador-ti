@@ -1,5 +1,6 @@
 package gestao_ti.gestao.controllers;
 
+import gestao_ti.gestao.entities.Colaborador;
 import gestao_ti.gestao.enums.EnumStatusColaborador;
 import gestao_ti.gestao.enums.EnumStatusEquipamento;
 import gestao_ti.gestao.repositories.ColaboradorRepository;
@@ -32,9 +33,15 @@ public class RequestController {
         int equipamentosEmUso = equipamentoRepository.findByStatus(EnumStatusEquipamento.EMPRESTADO).size();
 
         ret.put("colaboradores", totalColaboradores);
-        ret.put("equipamentos", equipamentosDisponiveis);
+        ret.put("equipamentosDisponiveis", equipamentosDisponiveis);
+        ret.put("equipamentosEmUso", equipamentosEmUso);
 
         return ret;
+    }
+
+    @GetMapping("/getColaboradores")
+    public List<Colaborador> getColaboradores(){
+        return colaboradorRepository.findByStatusOrderByNomeAsc(EnumStatusColaborador.ATIVO);
     }
 
 

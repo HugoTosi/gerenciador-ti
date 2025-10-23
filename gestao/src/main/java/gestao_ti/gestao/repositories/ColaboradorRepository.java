@@ -11,4 +11,6 @@ import java.util.List;
 public interface ColaboradorRepository extends JpaRepository<Colaborador, Long> {
 
     List<Colaborador> findByStatus(EnumStatusColaborador statusColaborador);
+
+    List<Colaborador> findByStatusOrderByNomeAsc(EnumStatusColaborador statusColaborador);
 }
