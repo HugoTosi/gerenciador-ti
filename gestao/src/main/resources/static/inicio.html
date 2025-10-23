@@ -10,6 +10,8 @@
 <body class="bg-light">
 
 <!-- CONTEÚDO PRINCIPAL -->
+<div id="navbar"></div>
+
 <div class="container mt-4">
     <h3 class="mb-4">Dashboard de Insumos</h3>
 
@@ -61,16 +63,23 @@
 
     <!-- BOTÕES DE AÇÃO RÁPIDA -->
     <div class="mt-4 d-flex gap-3">
-        <a href="/colaboradores/novo" class="btn btn-primary">+ Novo Colaborador</a>
-        <a href="/equipamentos/novo" class="btn btn-success">+ Novo Equipamento</a>
+        <a href="/colaboradores" class="btn btn-primary">+ Novo Colaborador</a>
+        <a href="/equipamentos" class="btn btn-success">+ Novo Equipamento</a>
     </div>
 </div>
 
 
 
 <script>
+    $(function(){
+        $("#navbar").load("/navbar.html");
+    });
 
-    //TODO: Recuperar infos do banco de dados
+    $.get("/api/dashboard", function (data) {
+        document.getElementById("qtdColaboradores").innerHTML = data.colaboradores;
+        document.getElementById("equipDisp").innerHTML = data.equipamentosDisponiveis;
+        document.getElementById("equipEmprest").innerHTML = data.equipamentosEmUso;
+    })
 </script>
 
 </body>
