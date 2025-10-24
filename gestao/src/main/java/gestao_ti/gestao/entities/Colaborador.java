@@ -2,6 +2,10 @@ package gestao_ti.gestao.entities;
 
 import gestao_ti.gestao.enums.EnumStatusColaborador;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 
 
 @Entity
@@ -11,10 +15,16 @@ public class Colaborador {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Nome é obrigatório")
+    @Size(min = 3, max = 100, message = "Nome deve ter entre 3 e 100 caracteres.")
     private String nome;
 
+    @NotBlank(message = "E-mail é obrigatório")
+    @Email(message = "E-mail inválido")
     private String email;
 
+    @NotBlank(message = "Telefone é obrigatório")
+    @Pattern(regexp = "\\d{10,11}", message = "Telefone deve conter 10 ou 11 dígitos numéricos.")
     private String telefone;
 
     @Enumerated(EnumType.STRING)
@@ -24,10 +34,13 @@ public class Colaborador {
 
     private String setor;
 
-    public Colaborador() {
+    private String observacoes;
+
+    public Colaborador(){
+
     }
 
-    public Colaborador(Long id, String nome, String email, String telefone, EnumStatusColaborador status, String cargo, String setor) {
+    public Colaborador(Long id, String nome, String email, String telefone, EnumStatusColaborador status, String cargo, String setor, String observacoes) {
         this.id = id;
         this.nome = nome;
         this.email = email;
@@ -35,6 +48,15 @@ public class Colaborador {
         this.status = status;
         this.cargo = cargo;
         this.setor = setor;
+        this.observacoes = observacoes;
+    }
+
+    public String getObservacoes() {
+        return observacoes;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
     }
 
     public Long getId() {

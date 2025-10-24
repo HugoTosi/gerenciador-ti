@@ -6,10 +6,10 @@ import gestao_ti.gestao.enums.EnumStatusEquipamento;
 import gestao_ti.gestao.repositories.ColaboradorRepository;
 import gestao_ti.gestao.repositories.EquipamentoRepository;
 import gestao_ti.gestao.utils.Registro;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +42,27 @@ public class RequestController {
     @GetMapping("/getColaboradores")
     public List<Colaborador> getColaboradores(){
         return colaboradorRepository.findByStatusOrderByNomeAsc(EnumStatusColaborador.ATIVO);
+    }
+
+    @PostMapping("/adicionarColaborador")
+    public ResponseEntity<?> adicionarColaborador(@Valid @RequestBody Colaborador colaborador){
+        try {
+            colaboradorRepository.save(colaborador);
+            return ResponseEntity.ok("Salvo");
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body("Erro. Não foi possível processar a requisição");
+        }
+
+    }
+
+    @PatchMapping("/inativarColaborador/{id}")
+    public ResponseEntity<?> inativarColaborador(@PathVariable("id") Long id){
+        try{
+            colaboradorRepository.atualizarStatus(id, EnumStatusColaborador.INATIVO);
+            return ResponseEntity.ok("Colaborador Inativado");
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body("Não foi possível inativar o Colaborador");
+        }
     }
 
 

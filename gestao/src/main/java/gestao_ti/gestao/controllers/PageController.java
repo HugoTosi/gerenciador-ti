@@ -15,4 +15,8 @@ public class PageController {
     public RedirectView colaboradores(){
         return new RedirectView("/colaboradores.html");
     }
+    @GetMapping("/colaboradores/novo")
+    public RedirectView novoColaborador(){
+        return new RedirectView("/novo-colaborador.html");
+    }
 }
