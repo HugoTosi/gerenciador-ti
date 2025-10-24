@@ -101,6 +101,9 @@
                 clone.querySelector(".col-cargo").textContent = colaborador.cargo;
                 clone.querySelector(".col-setor").textContent = colaborador.setor;
                 clone.querySelector(".col-email").textContent = colaborador.email;
+                clone.querySelector(".btn-inativar").addEventListener("click", function(){
+                    inativarColaborador(colaborador.id);
+                });
 
                 tabela.appendChild(clone);
             })
@@ -114,6 +117,23 @@
             window.location.href = "/colaboradores/inativos";
         });
     });
+
+    function inativarColaborador(id) {
+        $.ajax({
+            url: "/api/inativarColaborador/" + id,
+            method: "PATCH",
+            contentType: "application/json",
+
+            success:  function (data) {
+                alert(data)
+                window.location.reload()
+            },
+
+            error: function (data) {
+                alert(data)
+            }
+        })
+    }
 </script>
 
 </body>
