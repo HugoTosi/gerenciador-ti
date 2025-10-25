@@ -42,6 +42,22 @@
     </tr>
 </template>
 
+<template id="templateColaboradorInativo">
+    <tr class="hover-row">
+        <td class="col-id"></td>
+        <td class="col-nome"></td>
+        <td class="col-cargo"></td>
+        <td class="col-setor"></td>
+        <td class="col-email"></td>
+        <td class="text-center">
+            <button class="btn btn-sm btn-primary action-btn me-1 btn-editar">
+                <i class="bi bi-pencil-square"></i> Editar
+            </button>
+            <button class="btn btn-sm btn-success action-btn btn-ativar">Ativar</button>
+        </td>
+    </tr>
+</template>
+
 
 <!-- CONTEÚDO PRINCIPAL -->
 <div id="navbar"></div>
@@ -73,7 +89,26 @@
                     <th class="text-center">Ações</th>
                 </tr>
                 </thead>
-                <tbody id="tabelaColaboradores"></tbody>
+                <tbody id="tabelaColaboradoresAtivos"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="div-tabelaInativos" class="card shadow-sm mt-3" style="display: none">
+        <h3>Colaboradores Inativos</h3>
+        <div class="card-body">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>Cargo</th>
+                    <th>Setor</th>
+                    <th>Email</th>
+                    <th class="text-center">Ações</th>
+                </tr>
+                </thead>
+                <tbody id="tabelaColaboradoresInativos"></tbody>
             </table>
         </div>
     </div>
@@ -88,11 +123,10 @@
         $("#navbar").load("/navbar.html");
     });
 
-    // Comportamentos de botão
     $(document).ready(function(){
         $.get("/api/getColaboradores", function(data){
             console.log("data", data);
-            const tabela = document.getElementById("tabelaColaboradores");
+            const tabela = document.getElementById("tabelaColaboradoresAtivos");
             const template = document.getElementById("templateColaborador");
             data.forEach(colaborador => {
                 const clone = template.content.cloneNode(true);
@@ -116,14 +150,72 @@
             window.location.href = "/colaborador-form.html";
         });
 
-        $("#btnInativos").click(function(){
-            window.location.href = "/colaboradores/inativos";
+        let inativosCarregados = false;
+        let mostrandoInativos = false;
+
+        $("#btnInativos").click(function() {
+            const divTabela = document.getElementById("div-tabelaInativos");
+            mostrandoInativos = !mostrandoInativos;
+
+            if (mostrandoInativos) {
+                divTabela.style.display = "";
+
+                if (!inativosCarregados) {
+                    $.get("/api/getColaboradoresInativos", function(data) {
+                        const tabela = document.getElementById("tabelaColaboradoresInativos");
+                        const template = document.getElementById("templateColaboradorInativo");
+                        tabela.innerHTML = "";
+
+                        data.forEach(colaborador => {
+                            const clone = template.content.cloneNode(true);
+                            clone.querySelector(".col-id").textContent = colaborador.id;
+                            clone.querySelector(".col-nome").textContent = colaborador.nome;
+                            clone.querySelector(".col-cargo").textContent = colaborador.cargo;
+                            clone.querySelector(".col-setor").textContent = colaborador.setor;
+                            clone.querySelector(".col-email").textContent = colaborador.email;
+
+                            clone.querySelector(".btn-ativar").addEventListener("click", function() {
+                                ativarColaborador(colaborador.id);
+                            });
+
+                            clone.querySelector(".btn-editar").addEventListener("click", function() {
+                                window.location.href = "/colaborador-form.html?id=" + colaborador.id;
+                            });
+
+                            tabela.appendChild(clone);
+                        });
+
+                        inativosCarregados = true;
+                    });
+                }
+
+            } else {
+                divTabela.style.display = "none";
+            }
         });
+
     });
 
     function inativarColaborador(id) {
         $.ajax({
             url: "/api/inativarColaborador/" + id,
+            method: "PATCH",
+            contentType: "application/json",
+
+            success:  function (data) {
+                alert(data)
+                window.location.reload()
+            },
+
+            error: function (data) {
+                alert(data)
+            }
+        })
+    }
+
+    function ativarColaborador(id) {
+        $.ajax({
+            url: "/api/ativarColaborador/" + id,
             method: "PATCH",
             contentType: "application/json",
 
