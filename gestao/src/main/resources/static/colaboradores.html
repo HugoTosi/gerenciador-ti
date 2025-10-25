@@ -104,13 +104,16 @@
                 clone.querySelector(".btn-inativar").addEventListener("click", function(){
                     inativarColaborador(colaborador.id);
                 });
+                clone.querySelector(".btn-editar").addEventListener("click", function(){
+                    window.location.href = "/colaborador-form.html?id=" + colaborador.id;
+                });
 
                 tabela.appendChild(clone);
             })
         })
 
         $("#btnNovo").click(function(){
-            window.location.href = "/colaboradores/novo";
+            window.location.href = "/colaborador-form.html";
         });
 
         $("#btnInativos").click(function(){

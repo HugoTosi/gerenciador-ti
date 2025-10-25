@@ -44,6 +44,13 @@ public class RequestController {
         return colaboradorRepository.findByStatusOrderByNomeAsc(EnumStatusColaborador.ATIVO);
     }
 
+    @GetMapping("/getColaboradorById/{id}")
+    public ResponseEntity<Colaborador> getColaboradorById(@PathVariable("id") Long id){
+        return colaboradorRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping("/adicionarColaborador")
     public ResponseEntity<?> adicionarColaborador(@Valid @RequestBody Colaborador colaborador){
         try {
@@ -62,6 +69,17 @@ public class RequestController {
             return ResponseEntity.ok("Colaborador Inativado");
         } catch (Exception e){
             return ResponseEntity.badRequest().body("Não foi possível inativar o Colaborador");
+        }
+    }
+
+    @PutMapping("/atualizarColaborador/{id}")
+    public ResponseEntity<?> atualizarColaborador(@PathVariable("id") Long id, @RequestBody Colaborador colaborador){
+        try{
+            colaborador.setId(id);
+            colaboradorRepository.save(colaborador);
+            return ResponseEntity.ok("Atualizado");
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body("Erro. Não foi possível processar a requisição");
         }
     }
 
