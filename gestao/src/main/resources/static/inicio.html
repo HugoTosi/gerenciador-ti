@@ -77,7 +77,7 @@
         $("#navbar").load("/navbar.html");
     });
 
-    $.get("/api/dashboard", function (data) {
+    $.get("/colaborador/dashboard", function (data) {
         document.getElementById("qtdColaboradores").innerHTML = data.colaboradores;
         document.getElementById("equipDisp").innerHTML = data.equipamentosDisponiveis;
         document.getElementById("equipEmprest").innerHTML = data.equipamentosEmUso;
