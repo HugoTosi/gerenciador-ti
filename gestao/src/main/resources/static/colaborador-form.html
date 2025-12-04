@@ -101,7 +101,7 @@
     var url, method;
 
     if (colaboradorId > 0 && colaboradorId !== undefined) {
-        $.get("api/getColaboradorById/" + parseInt(colaboradorId), function (data) {
+        $.get("/colaborador/getColaboradorById/" + parseInt(colaboradorId), function (data) {
             document.getElementById("nome").value = data.nome;
             document.getElementById("email").value = data.email;
             document.getElementById("telefone").value = data.telefone;
@@ -110,11 +110,11 @@
             document.getElementById("status").value = data.status;
             document.getElementById("observacoes").value = data.observacoes;
 
-            url = "/api/atualizarColaborador/" + colaboradorId;
+            url = "/colaborador/atualizarColaborador/" + colaboradorId;
             method = "PUT";
         })
     } else {
-        url = "/api/adicionarColaborador";
+        url = "/colaborador/adicionarColaborador";
         method = "POST";
     }
 
