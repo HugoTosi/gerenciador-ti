@@ -124,7 +124,7 @@
     });
 
     $(document).ready(function(){
-        $.get("/api/getColaboradores", function(data){
+        $.get("/colaborador/getColaboradores", function(data){
             console.log("data", data);
             const tabela = document.getElementById("tabelaColaboradoresAtivos");
             const template = document.getElementById("templateColaborador");
@@ -161,7 +161,7 @@
                 divTabela.style.display = "";
 
                 if (!inativosCarregados) {
-                    $.get("/api/getColaboradoresInativos", function(data) {
+                    $.get("/colaborador/getColaboradoresInativos", function(data) {
                         const tabela = document.getElementById("tabelaColaboradoresInativos");
                         const template = document.getElementById("templateColaboradorInativo");
                         tabela.innerHTML = "";
@@ -198,7 +198,7 @@
 
     function inativarColaborador(id) {
         $.ajax({
-            url: "/api/inativarColaborador/" + id,
+            url: "/colaborador/inativarColaborador/" + id,
             method: "PATCH",
             contentType: "application/json",
 
@@ -215,7 +215,7 @@
 
     function ativarColaborador(id) {
         $.ajax({
-            url: "/api/ativarColaborador/" + id,
+            url: "/colaborador/ativarColaborador/" + id,
             method: "PATCH",
             contentType: "application/json",
 

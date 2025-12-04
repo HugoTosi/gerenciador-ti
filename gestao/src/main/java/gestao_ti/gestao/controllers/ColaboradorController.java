@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
-public class RequestController {
+@RequestMapping("/colaborador")
+public class ColaboradorController {
 
     @Autowired
     ColaboradorRepository colaboradorRepository;
