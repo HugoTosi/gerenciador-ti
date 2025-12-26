@@ -4,5 +4,6 @@ public enum EnumStatusEquipamento {
     NOVO,
     EMPRESTADO,
     DISPONIVEL,
+    MANUTENCAO,
     DESCARTADO
 }

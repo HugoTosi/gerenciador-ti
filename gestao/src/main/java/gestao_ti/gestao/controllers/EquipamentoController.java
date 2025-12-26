@@ -47,11 +47,21 @@ public class EquipamentoController {
     @PutMapping("/atualizarEquipamento/{id}")
     public ResponseEntity<?> atualizarEquipamento(@PathVariable("id") Long id, @RequestBody Equipamento equipamento) {
         try {
-            //equipamento.setId(id);
+            equipamento.setId(id);
             equipamentoRepository.save(equipamento);
             return ResponseEntity.ok("Equipamento atualizado com sucesso!");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Erro: não foi possível processar a requisição.");
+        }
+    }
+
+    @PatchMapping("/baixarEquipamento/{id}")
+    public ResponseEntity<?> baixarEquipamento(@PathVariable("id") Long id){
+        try {
+            equipamentoRepository.atualizarStatus(id, EnumStatusEquipamento.DESCARTADO);
+            return ResponseEntity.ok("Equipamento baixado");
+        } catch (Exception e){
+            return  ResponseEntity.badRequest().body("Erro: não foi possivel processar a requisição");
         }
     }
 

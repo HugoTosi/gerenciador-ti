@@ -3,6 +3,7 @@ package gestao_ti.gestao.entities;
 import gestao_ti.gestao.enums.EnumStatusEquipamento;
 import gestao_ti.gestao.enums.EnumTipoEquipamento;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,8 @@ public class Equipamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
+    @NotBlank
     private String cod_patrimonio;
 
     private String nome;

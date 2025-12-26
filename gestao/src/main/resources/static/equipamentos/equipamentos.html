@@ -72,7 +72,7 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h3>Equipamentos Ativos</h3>
         <div>
-            <button class="btn btn-success me-2" id="btnNovoEquipamento">
+            <button class="btn btn-success me-2" id="btn-novo-equipamento">
                 <i class="bi bi-plus-square"></i> Novo Equipamento
             </button>
             <button class="btn btn-secondary" id="btnVerInativos">
@@ -124,6 +124,10 @@
         $("#navbar").load("/navbar.html");
     })
 
+    $(document).on("click", "#btn-novo-equipamento", function () {
+        window.location.href = "equipamentos-form.html";
+    });
+
     let tableEquipamentosAtivos = new DataTable('#tabela-equipamentos-ativos', {
         responsive: true,
         pageLength: 10,
@@ -142,7 +146,7 @@
                 equip.cod_patrimonio,
                 equip.tipo_equipamento,
                 equip.status,
-                `<button class="btn btn-sm btn-primary me-1 btn-editar" data-id="${equip.id}">
+                `<button class="btn btn-sm btn-primary me-1 btn-editar" onclick="redirecEditEquipamento(${equip.id})" data-id="${equip.id}">
                     <i class="bi bi-pencil-square"></i> Editar
                  </button>
                  <button class="btn btn-sm btn-danger btn-desativar" data-id="${equip.id}">
@@ -158,6 +162,27 @@
                 alert("Algo deu errado na requisição (" + xhr.status + ")");
             });
 
+    }
+
+    function redirecEditEquipamento(id){
+         window.location.href = "equipamentos-form.html?id=" + id;
+    }
+
+    function baixarEquipamento(id){
+         $.ajax({
+             url: "/equipamento/baixarEquipamento",
+             method: 'PATCH',
+             contentType: "application/json",
+
+             success: function(data){
+                 loadEquipments();
+             },
+
+             error: function(xhr, status, error) {
+                 console.log(xhr.status, status, error);
+                 alert("Não foi possivel realizar a baixa do equipamento")
+             }
+         })
     }
 </script>
 </body>
