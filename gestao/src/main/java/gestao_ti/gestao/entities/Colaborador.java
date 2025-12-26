@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.hibernate.validator.constraints.br.CPF;
 
 
 @Entity
@@ -21,14 +22,18 @@ public class Colaborador {
 
     @NotBlank(message = "E-mail é obrigatório")
     @Email(message = "E-mail inválido")
+    @Column(unique = true)
     private String email;
 
-    @NotBlank(message = "Telefone é obrigatório")
     @Pattern(regexp = "\\d{10,11}", message = "Telefone deve conter 10 ou 11 dígitos numéricos.")
     private String telefone;
 
     @Enumerated(EnumType.STRING)
     private EnumStatusColaborador status;
+
+    @CPF
+    @NotBlank(message = "CPF é obrigatório")
+    private String cpf;
 
     private String cargo;
 
@@ -40,6 +45,18 @@ public class Colaborador {
 
     }
 
+    public Colaborador(Long id, String nome, String email, String telefone, EnumStatusColaborador status, String cpf, String cargo, String setor, String observacoes) {
+        this.id = id;
+        this.nome = nome;
+        this.email = email;
+        this.telefone = telefone;
+        this.status = status;
+        this.cpf = cpf;
+        this.cargo = cargo;
+        this.setor = setor;
+        this.observacoes = observacoes;
+    }
+
     public Colaborador(Long id, String nome, String email, String telefone, EnumStatusColaborador status, String cargo, String setor, String observacoes) {
         this.id = id;
         this.nome = nome;
@@ -49,6 +66,14 @@ public class Colaborador {
         this.cargo = cargo;
         this.setor = setor;
         this.observacoes = observacoes;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public String getObservacoes() {

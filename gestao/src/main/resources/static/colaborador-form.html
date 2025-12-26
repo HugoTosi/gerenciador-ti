@@ -34,6 +34,12 @@
                     <div class="invalid-feedback">Informe o nome do colaborador.</div>
                 </div>
 
+                <div class="col-md-4">
+                    <label for="cpf" class="form-label required">CPF</label>
+                    <input type="text" class="form-control" id="cpf" name="cpf" placeholder="000.000.000-00" required>
+                    <div class="invalid-feedback">Informe o nome do colaborador.</div>
+                </div>
+
                 <div class="col-md-6">
                     <label for="email" class="form-label required">Email</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="ex@empresa.com" required>
@@ -103,6 +109,7 @@
     if (colaboradorId > 0 && colaboradorId !== undefined) {
         $.get("/colaborador/getColaboradorById/" + parseInt(colaboradorId), function (data) {
             document.getElementById("nome").value = data.nome;
+            document.getElementById("cpf").value = data.cpf;
             document.getElementById("email").value = data.email;
             document.getElementById("telefone").value = data.telefone;
             document.getElementById("cargo").value = data.cargo;
@@ -132,6 +139,7 @@
         const colaborador = {
             nome: $('#nome').val().trim(),
             email: $('#email').val().trim(),
+            cpf: $('#cpf').val().trim(),
             telefone: $('#telefone').val().trim() || null,
             cargo: $('#cargo').val().trim(),
             setor: $('#setor').val().trim() || null,
